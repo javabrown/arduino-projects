@@ -1,29 +1,25 @@
 #include <Stepper.h>
 
-int in1Pin = 2;
-int in2Pin = 3;
-int in3Pin = 4;
-int in4Pin = 5;
+const int stepsPerRevolution = 100;  //this is to fit the number of steps per revolutio for your motor
+ 
+int In1Port = 8;
+int In2Port = 9;
+int In3Port = 10;
+int In4Port = 11;
 
-Stepper motor(512, in1Pin, in2Pin, in3Pin, in4Pin);
+Stepper myStepper(stepsPerRevolution, In1Port, In3Port, In2Port, In4Port);
 
-void setup()
-{
-    pinMode(in1Pin, OUTPUT);
-    pinMode(in2Pin, OUTPUT);
-    pinMode(in3Pin, OUTPUT);
-    pinMode(in4Pin, OUTPUT);
-
-    motor.setSpeed(25);
+void setup() {
+  myStepper.setSpeed(60);
+  Serial.begin(9600);
 }
 
-void loop()
-{
-    int steps = 360;
-    motor.step(steps);
-    delay(100);
+void loop() {
+  Serial.println("clockwise");
+  myStepper.step(stepsPerRevolution);
+  delay(500);
 
-    steps = -360;
-    motor.step(steps);
-    delay(100);
+  Serial.println("counterclockwise");
+  myStepper.step(-stepsPerRevolution);
+  delay(500);
 }
